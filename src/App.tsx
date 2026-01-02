@@ -11,7 +11,7 @@ import About from './pages/About';
 import { Product } from './types';
 import LiveConsultation from './components/LiveConsultation';
 import logoHeader from './assets/logo_header.png';
-import logoFooter from './assets/logo_footer.png';
+
 
 interface CartItem extends Product {
     quantity: number;

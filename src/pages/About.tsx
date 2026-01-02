@@ -102,8 +102,8 @@ const About: React.FC = () => {
                         <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
                         <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/15 rounded-full blur-[100px] pointer-events-none"></div>
 
-                        <div className="w-32 h-32 rounded-full bg-white/40 mb-8 shadow-gem border-[6px] border-white/60 z-10 flex items-center justify-center">
-                            <img src={logoHeader} alt="Art Tales Brand" className="w-20 h-20 object-contain" />
+                        <div className="mb-8 z-10 flex items-center justify-center">
+                            <img src={logoHeader} alt="Art Tales Brand" className="h-28 w-auto object-contain" />
                         </div>
 
                         <h2 className="text-primary text-4xl md:text-5xl font-black leading-tight tracking-tight mb-6 z-10">Stay in the Loop</h2>
