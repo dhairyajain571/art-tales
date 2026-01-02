@@ -54,15 +54,12 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
             <header className="sticky top-6 z-50 w-[92%] max-w-[1280px] mx-auto transition-all duration-300">
                 <div className="glass-panel !rounded-full p-2 pr-3 flex items-center justify-between !bg-white/40">
                     <Link className="flex items-center gap-3 group pl-1" to="/">
-                        <div className="relative w-10 h-10 flex items-center justify-center rounded-full overflow-hidden shadow-gem bg-gradient-to-br from-white to-secondary/20">
-                            <span className="material-symbols-outlined text-primary text-[22px] relative z-10" style={{ display: 'none' }}>palette</span>
-                            <img src={logoHeader} alt="Art Tales" className="w-full h-full object-contain relative z-10 p-1" />
-                            <div className="absolute inset-0 bg-white/40 opacity-50"></div>
-                        </div>
-                        <div className="flex flex-col">
-                            <h1 className="text-lg font-bold tracking-tight text-primary leading-none text-depth">Art Tales</h1>
-                            <span className="text-[9px] uppercase tracking-[0.2em] text-primary/70 font-semibold mt-0.5">Aashwi Maheshwari</span>
-                        </div>
+                        <Link className="flex items-center gap-3 group pl-1" to="/">
+                            <img src={logoHeader} alt="Art Tales" className="h-[4.5rem] w-auto object-contain transition-transform duration-300 group-hover:scale-110" />
+                            <div className="flex flex-col">
+                                <span className="text-[10px] uppercase tracking-[0.2em] text-primary/70 font-semibold mt-0.5">Aashwi Maheshwari</span>
+                            </div>
+                        </Link>
                     </Link>
 
                     <nav className="hidden md:flex items-center gap-1 bg-white/20 px-1.5 py-1.5 rounded-full shadow-inner border border-white/30 backdrop-blur-md">
@@ -121,7 +118,7 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
                     <div className="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60]" onClick={() => setIsMobileMenuOpen(false)}></div>
                     <div className="fixed left-0 top-0 h-full w-[80%] max-w-sm bg-white/90 backdrop-blur-2xl z-[70] shadow-2xl flex flex-col p-8 border-r border-white/40">
                         <div className="flex items-center justify-between mb-8">
-                            <img src={logoHeader} alt="Logo" className="h-14 w-auto" />
+                            <img src={logoHeader} alt="Logo" className="h-20 w-auto" />
                             <button onClick={() => setIsMobileMenuOpen(false)} className="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center transition-colors text-primary">
                                 <span className="material-symbols-outlined">close</span>
                             </button>
@@ -231,14 +228,7 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8 mb-16">
                         <div className="col-span-1 md:col-span-1">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-white to-secondary/20 flex items-center justify-center text-primary shadow-gem border border-white/60 relative overflow-hidden group">
-                                    <img src={logoFooter} alt="Art Tales" className="w-8 h-8 object-contain relative z-10" />
-                                    <div className="absolute inset-0 bg-white/40 opacity-50"></div>
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-xl font-bold text-primary tracking-tight text-depth">Art Tales</span>
-                                    <span className="text-[9px] uppercase tracking-[0.2em] text-primary/70 font-semibold mt-0.5">By Aashwi Maheshwari</span>
-                                </div>
+                                <img src={logoHeader} alt="Art Tales" className="h-28 w-auto object-contain" />
                             </div>
                             <p className="text-sm text-slate-600 leading-relaxed mb-6 font-medium pr-4">
                                 Handcrafted resin art and candles, designed to illuminate your world with creativity and elegance.

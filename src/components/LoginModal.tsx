@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import loginBg from '../assets/login_bg.png';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo_header.png';
 
 interface LoginModalProps {
     isOpen: boolean;
