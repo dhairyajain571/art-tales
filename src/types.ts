@@ -27,3 +27,12 @@ export interface PortfolioItem {
     image: string;
     description: string;
 }
+
+export interface User {
+    id: string;
+    name: string;
+    email?: string;
+    phone?: string;
+    avatar?: string;
+    isGuest?: boolean;
+}

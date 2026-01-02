@@ -26,7 +26,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }, []);
 
-    const loginWithEmail = async (email: string, pass: string) => {
+    const loginWithEmail = async (email: string, _pass: string) => {
         setLoading(true);
         // Mock API delay
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -44,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setLoading(false);
     };
 
-    const loginWithPhone = async (phone: string, otp: string) => {
+    const loginWithPhone = async (phone: string, _otp: string) => {
         setLoading(true);
         await new Promise(resolve => setTimeout(resolve, 1000));
 
