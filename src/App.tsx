@@ -45,82 +45,67 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
             <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
 
             {/* Background decoration */}
-            <div className="fixed inset-0 w-full h-full -z-20 bg-background-soft"></div>
+            <div className="fixed inset-0 w-full h-full -z-20 bg-[#Fdfbfc]"></div>
             <div className="fixed inset-0 w-full h-full -z-10 bg-resin-swirl opacity-80"></div>
+            <div className="fixed inset-0 w-full h-full -z-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.04] mix-blend-overlay"></div>
+            <div className="fixed top-[-10%] left-[-5%] w-[40vw] h-[40vw] rounded-full bg-secondary/20 blur-[100px] -z-10 mix-blend-multiply"></div>
+            <div className="fixed bottom-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-primary/10 blur-[100px] -z-10 mix-blend-multiply"></div>
 
-            <header className="sticky top-6 z-50 w-[94%] max-w-[1280px] mx-auto transition-all duration-300">
-                <div className="glass-panel !rounded-full p-2 pr-4 flex items-center justify-between !bg-white/60 border-white/80 shadow-lg min-h-[5rem]">
-                    <div className="flex items-center gap-4 pl-2">
-                        {/* Mobile Menu Button */}
-                        <button
-                            onClick={() => setIsMobileMenuOpen(true)}
-                            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/40 text-primary hover:bg-white/80 transition-colors"
-                        >
-                            <span className="material-symbols-outlined">menu</span>
-                        </button>
+            <header className="sticky top-6 z-50 w-[92%] max-w-[1280px] mx-auto transition-all duration-300">
+                <div className="glass-panel !rounded-full p-2 pr-3 flex items-center justify-between !bg-white/40">
+                    <Link className="flex items-center gap-3 group pl-1" to="/">
+                        <div className="relative w-10 h-10 flex items-center justify-center rounded-full overflow-hidden shadow-gem bg-gradient-to-br from-white to-secondary/20">
+                            <span className="material-symbols-outlined text-primary text-[22px] relative z-10" style={{ display: 'none' }}>palette</span>
+                            <img src={logoHeader} alt="Art Tales" className="w-full h-full object-contain relative z-10 p-1" />
+                            <div className="absolute inset-0 bg-white/40 opacity-50"></div>
+                        </div>
+                        <div className="flex flex-col">
+                            <h1 className="text-lg font-bold tracking-tight text-primary leading-none text-depth">Art Tales</h1>
+                            <span className="text-[9px] uppercase tracking-[0.2em] text-primary/70 font-semibold mt-0.5">Aashwi Maheshwari</span>
+                        </div>
+                    </Link>
 
-                        <Link className="flex items-center gap-3 group" to="/">
-                            <div className="relative h-16 md:h-20 flex items-center">
-                                <img
-                                    src={logoHeader}
-                                    alt="Art Tales Logo"
-                                    className="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-105"
-                                />
-                            </div>
-                        </Link>
-                    </div>
-
-                    <nav className="hidden md:flex items-center gap-1 bg-white/40 px-1.5 py-1.5 rounded-full shadow-inner border border-white/50 backdrop-blur-xl">
-                        <Link className={`text-xs font-black uppercase tracking-widest px-6 py-2.5 rounded-full transition-all duration-300 ${isActive('/')}`} to="/">Home</Link>
-                        <Link className={`text-xs font-black uppercase tracking-widest px-6 py-2.5 rounded-full transition-all duration-300 ${isActive('/shop')}`} to="/shop">Shop</Link>
-                        <Link className={`text-xs font-black uppercase tracking-widest px-6 py-2.5 rounded-full transition-all duration-300 ${isActive('/portfolio')}`} to="/portfolio">Portfolio</Link>
-                        <Link className={`text-xs font-black uppercase tracking-widest px-6 py-2.5 rounded-full transition-all duration-300 ${isActive('/about')}`} to="/about">About Us</Link>
-                        <Link className={`text-xs font-black uppercase tracking-widest px-6 py-2.5 rounded-full transition-all duration-300 ${isActive('/contact')}`} to="/contact">Contact</Link>
+                    <nav className="hidden md:flex items-center gap-1 bg-white/20 px-1.5 py-1.5 rounded-full shadow-inner border border-white/30 backdrop-blur-md">
+                        <Link className={`text-sm font-semibold px-6 py-2 rounded-full transition-all duration-300 ${isActive('/shop')}`} to="/shop">Shop</Link>
+                        <Link className={`text-sm font-semibold px-6 py-2 rounded-full transition-all duration-300 ${isActive('/portfolio')}`} to="/portfolio">Portfolio</Link>
+                        <Link className={`text-sm font-semibold px-6 py-2 rounded-full transition-all duration-300 ${isActive('/about')}`} to="/about">About Us</Link>
+                        <Link className={`text-sm font-semibold px-6 py-2 rounded-full transition-all duration-300 ${isActive('/contact')}`} to="/contact">Contact</Link>
                     </nav>
 
                     <div className="flex items-center gap-2">
-                        <button className="hidden sm:flex items-center justify-center w-11 h-11 rounded-full bg-white/80 hover:bg-white text-primary shadow-gem transition-all border border-white/60">
-                            <span className="material-symbols-outlined text-[20px]">search</span>
+                        <button className="flex items-center justify-center w-10 h-10 rounded-full bg-white/50 hover:bg-white text-primary shadow-gem transition-all border border-white/60 hover:-translate-y-0.5">
+                            <span className="material-symbols-outlined text-[18px]">search</span>
                         </button>
 
                         {/* Auth Button */}
                         {isAuthenticated && user ? (
                             <div className="relative group">
-                                <Link to="/profile" className="flex items-center gap-2 pl-1 pr-4 h-11 rounded-full bg-white/80 hover:bg-white text-primary shadow-gem transition-all border border-white/60">
-                                    <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full border border-primary/20" />
-                                    <span className="text-xs font-bold max-w-[80px] truncate">{user.name}</span>
+                                <Link to="/profile" className="flex items-center justify-center w-10 h-10 rounded-full bg-white/50 hover:bg-white text-primary shadow-gem transition-all border border-white/60 hover:-translate-y-0.5 overflow-hidden">
+                                    <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
                                 </Link>
                                 <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden hidden group-hover:block animate-fadeIn p-1">
                                     <Link to="/profile" className="w-full text-left px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-xl flex items-center gap-2">
                                         <span className="material-symbols-outlined text-lg">person</span> Profile
                                     </Link>
-                                    <button className="w-full text-left px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-xl flex items-center gap-2">
-                                        <span className="material-symbols-outlined text-lg">favorite</span> Favorites
-                                    </button>
                                     <button onClick={logout} className="w-full text-left px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl flex items-center gap-2">
                                         <span className="material-symbols-outlined text-lg">logout</span> Logout
                                     </button>
                                 </div>
                             </div>
                         ) : (
-                            <button
-                                onClick={() => setIsLoginModalOpen(true)}
-                                className="flex items-center gap-2 px-6 h-11 rounded-full bg-primary text-white font-bold text-xs uppercase tracking-widest shadow-lg hover:shadow-xl hover:scale-105 transition-all"
-                            >
-                                Login
+                            <button onClick={() => setIsLoginModalOpen(true)} className="flex items-center justify-center w-10 h-10 rounded-full bg-white/50 hover:bg-white text-primary shadow-gem transition-all border border-white/60 hover:-translate-y-0.5">
+                                <span className="material-symbols-outlined text-[18px]">person</span>
                             </button>
                         )}
 
-                        <button
-                            onClick={() => setIsCartOpen(true)}
-                            className="flex items-center justify-center w-11 h-11 rounded-full bg-white/80 hover:bg-white text-primary shadow-gem transition-all border border-white/60 relative group"
-                        >
-                            <span className="material-symbols-outlined text-[20px]">shopping_bag</span>
-                            {cart.length > 0 && (
-                                <span className="absolute -top-1 -right-1 w-5 h-5 bg-secondary-dark rounded-full border border-white shadow-sm flex items-center justify-center text-[10px] text-white font-bold">
-                                    {cart.reduce((a, b) => a + b.quantity, 0)}
-                                </span>
-                            )}
+                        <button onClick={() => setIsCartOpen(true)} className="flex items-center justify-center w-10 h-10 rounded-full bg-white/50 hover:bg-white text-primary shadow-gem transition-all border border-white/60 relative group hover:-translate-y-0.5">
+                            <span className="material-symbols-outlined text-[18px]">shopping_bag</span>
+                            <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-secondary-dark rounded-full border border-white shadow-sm scale-0 group-hover:scale-100 transition-transform flex items-center justify-center text-[7px] text-white">
+                                {cart.length > 0 ? cart.length : ''}
+                            </span>
+                        </button>
+                        <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white/50 hover:bg-white text-primary shadow-gem transition-all border border-white/60 hover:-translate-y-0.5">
+                            <span className="material-symbols-outlined text-[18px]">menu</span>
                         </button>
                     </div>
                 </div>
@@ -239,44 +224,68 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
             </button>
             {isConsultOpen && <LiveConsultation onClose={() => setIsConsultOpen(false)} />}
 
-            <footer className="bg-primary pt-24 pb-12 relative overflow-hidden">
-                <div className="absolute inset-0 opacity-[0.05] pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E")` }}></div>
-                <div className="max-w-[1280px] mx-auto px-6 relative z-10">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16 mb-20">
-                        <div className="col-span-1 md:col-span-1 flex flex-col items-start gap-8">
-                            <div className="h-24 flex items-center">
-                                <img src={logoFooter} alt="Art Tales Logo" className="h-full w-auto object-contain" />
+            <footer className="footer-glass relative overflow-hidden mt-12 border-t border-white/60">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-white/40 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay"></div>
+                <div className="max-w-[1280px] mx-auto px-6 pt-16 pb-8 relative z-10">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8 mb-16">
+                        <div className="col-span-1 md:col-span-1">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-white to-secondary/20 flex items-center justify-center text-primary shadow-gem border border-white/60 relative overflow-hidden group">
+                                    <img src={logoFooter} alt="Art Tales" className="w-8 h-8 object-contain relative z-10" />
+                                    <div className="absolute inset-0 bg-white/40 opacity-50"></div>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-xl font-bold text-primary tracking-tight text-depth">Art Tales</span>
+                                    <span className="text-[9px] uppercase tracking-[0.2em] text-primary/70 font-semibold mt-0.5">By Aashwi Maheshwari</span>
+                                </div>
                             </div>
-                            <p className="text-sm text-white/60 leading-relaxed font-medium max-w-xs">
-                                Capturing fluid stories in resin and light. Handcrafted boutique art studio based in Mumbai.
+                            <p className="text-sm text-slate-600 leading-relaxed mb-6 font-medium pr-4">
+                                Handcrafted resin art and candles, designed to illuminate your world with creativity and elegance.
                             </p>
+                            <div className="flex gap-3">
+                                <a className="w-10 h-10 flex items-center justify-center rounded-full btn-resin-secondary text-primary transition-all" href="#"><span className="material-symbols-outlined text-lg">photo_camera</span></a>
+                                <a className="w-10 h-10 flex items-center justify-center rounded-full btn-resin-secondary text-primary transition-all" href="#"><span className="material-symbols-outlined text-lg">alternate_email</span></a>
+                            </div>
                         </div>
                         <div>
-                            <h4 className="font-black mb-8 text-[10px] uppercase tracking-[0.3em] text-white/40">Shop</h4>
-                            <ul className="space-y-4 text-sm text-white/70 font-bold">
-                                <li><Link className="hover:text-secondary transition-colors" to="/shop">All Works</Link></li>
-                                <li><Link className="hover:text-secondary transition-colors" to="/shop">Resin Art</Link></li>
-                                <li><Link className="hover:text-secondary transition-colors" to="/contact">Custom Orders</Link></li>
+                            <h4 className="font-bold mb-6 text-xs uppercase tracking-widest text-primary/80">Shop</h4>
+                            <ul className="space-y-3 text-sm text-slate-600 font-medium">
+                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/shop"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> All Products</Link></li>
+                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/shop"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> Resin Art</Link></li>
+                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/shop"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> Candles</Link></li>
+                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/shop"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> Gift Cards</Link></li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="font-black mb-8 text-[10px] uppercase tracking-[0.3em] text-white/40">Company</h4>
-                            <ul className="space-y-4 text-sm text-white/70 font-bold">
-                                <li><Link className="hover:text-secondary transition-colors" to="/about">About Us</Link></li>
-                                <li><Link className="hover:text-secondary transition-colors" to="/portfolio">Portfolio</Link></li>
-                                <li><Link className="hover:text-secondary transition-colors" to="/contact">Contact</Link></li>
+                            <h4 className="font-bold mb-6 text-xs uppercase tracking-widest text-primary/80">Support</h4>
+                            <ul className="space-y-3 text-sm text-slate-600 font-medium">
+                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/contact"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> Contact Us</Link></li>
+                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/contact"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> Shipping Policy</Link></li>
+                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/contact"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> Returns</Link></li>
+                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/about"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> Care Instructions</Link></li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="font-black mb-8 text-[10px] uppercase tracking-[0.3em] text-white/40">Social</h4>
-                            <ul className="space-y-4 text-sm text-white/70 font-bold">
-                                <li><a href="#" className="hover:text-secondary transition-colors flex items-center gap-2">Instagram</a></li>
-                                <li><a href="#" className="hover:text-secondary transition-colors flex items-center gap-2">Pinterest</a></li>
+                            <h4 className="font-bold mb-6 text-xs uppercase tracking-widest text-primary/80">Contact</h4>
+                            <ul className="space-y-4 text-sm text-slate-600 font-medium">
+                                <li className="flex items-start gap-3 p-3 rounded-2xl bg-white/40 border border-white/50 shadow-sm">
+                                    <span className="material-symbols-outlined text-lg mt-0.5 text-primary">location_on</span>
+                                    <span>Mumbai, India</span>
+                                </li>
+                                <li className="flex items-center gap-3 p-3 rounded-2xl bg-white/40 border border-white/50 shadow-sm">
+                                    <span className="material-symbols-outlined text-lg text-primary">mail</span>
+                                    <span>hello@arttales.com</span>
+                                </li>
                             </ul>
                         </div>
                     </div>
-                    <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] text-white/30 font-black tracking-[0.25em] uppercase">
-                        <p>© 2024 Art Tales by Aashwi Maheshwari</p>
+                    <div className="pt-8 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 font-bold tracking-wide">
+                        <p>© 2023 Art Tales by Aashwi Maheshwari. All rights reserved.</p>
+                        <div className="flex gap-6">
+                            <a className="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+                            <a className="hover:text-primary transition-colors" href="#">Terms of Service</a>
+                        </div>
                     </div>
                 </div>
             </footer>
