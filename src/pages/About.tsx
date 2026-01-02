@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/logo.png';
-import logoFull from '../assets/logo_full.png';
+import logoHero from '../assets/logo_hero.png';
+import logoHeader from '../assets/logo_header.png';
 
 const About: React.FC = () => {
     return (
@@ -23,7 +23,7 @@ const About: React.FC = () => {
 
                             {/* Brand Logo inside hero content */}
                             <div className="h-32 w-auto mb-6 flex justify-start">
-                                <img src={logoFull} alt="Art Tales Logo" className="h-full w-auto object-contain drop-shadow-sm" />
+                                <img src={logoHero} alt="Art Tales Logo" className="h-full w-auto object-contain drop-shadow-sm" />
                             </div>
 
                             <h1 className="text-primary text-5xl md:text-6xl font-black leading-tight tracking-tight drop-shadow-sm">
@@ -103,7 +103,7 @@ const About: React.FC = () => {
                         <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/15 rounded-full blur-[100px] pointer-events-none"></div>
 
                         <div className="w-32 h-32 rounded-full bg-white/40 mb-8 shadow-gem border-[6px] border-white/60 z-10 flex items-center justify-center">
-                            <img src={logo} alt="Art Tales Brand" className="w-20 h-20 object-contain" />
+                            <img src={logoHeader} alt="Art Tales Brand" className="w-20 h-20 object-contain" />
                         </div>
 
                         <h2 className="text-primary text-4xl md:text-5xl font-black leading-tight tracking-tight mb-6 z-10">Stay in the Loop</h2>

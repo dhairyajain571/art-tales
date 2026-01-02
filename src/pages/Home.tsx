@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { PRODUCTS } from '../constants';
 import { Product } from '../types';
-import logoFull from '../assets/logo_full.png';
+import logoHero from '../assets/logo_hero.png';
 // Using a placeholder for the hero image if external link fails, or keeping external link.
 // Reference used: https://lh3.googleusercontent.com/aida-public/AB6AXuBnfpnl8rnPT5eT5ClGG4m3IVGZwCW1fSFa3SzI3di1rCinY4i0B_gbBURMpa3KpA1_E-NYGrZlAvBmumCFjDH9TkcTJtK0_1Nu2mG93Qzh4FkSVxWRXp3HX7LBMdRmnPJQYn53srdhBZqwBr-Gfjdf11cc4n1Yf0lbhrVOzTPgYqvxSVGxlYOWnTAsykpmL77Ey8H6lR3blCGzVQBhnstN55Rnw7VKvTF4DzCLa-IJsEbC31Y8bYDVKcH6afO3S16N3NXoJb-RdjZP
 // I will keep it for now.
@@ -31,7 +31,7 @@ const Home: React.FC<Props> = ({ addToCart }) => {
 
                                 {/* Brand Logo in Hero */}
                                 <div className="h-32 md:h-48 w-auto mb-4 flex justify-center lg:justify-start">
-                                    <img src={logoFull} alt="Art Tales Logo" className="h-full w-auto object-contain drop-shadow-md" />
+                                    <img src={logoHero} alt="Art Tales Logo" className="h-full w-auto object-contain drop-shadow-md" />
                                 </div>
 
                                 <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black leading-[0.9] tracking-tight text-primary">

@@ -10,7 +10,8 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import { Product } from './types';
 import LiveConsultation from './components/LiveConsultation';
-import logo from './assets/logo.png';
+import logoHeader from './assets/logo_header.png';
+import logoFooter from './assets/logo_footer.png';
 
 interface CartItem extends Product {
     quantity: number;
@@ -61,7 +62,7 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
                         <Link className="flex items-center gap-3 group" to="/">
                             <div className="relative h-16 md:h-20 flex items-center">
                                 <img
-                                    src={logo}
+                                    src={logoHeader}
                                     alt="Art Tales Logo"
                                     className="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-105"
                                 />
@@ -135,7 +136,7 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
                     <div className="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60]" onClick={() => setIsMobileMenuOpen(false)}></div>
                     <div className="fixed left-0 top-0 h-full w-[80%] max-w-sm bg-white/90 backdrop-blur-2xl z-[70] shadow-2xl flex flex-col p-8 border-r border-white/40">
                         <div className="flex items-center justify-between mb-8">
-                            <img src={logo} alt="Logo" className="h-14 w-auto" />
+                            <img src={logoHeader} alt="Logo" className="h-14 w-auto" />
                             <button onClick={() => setIsMobileMenuOpen(false)} className="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center transition-colors text-primary">
                                 <span className="material-symbols-outlined">close</span>
                             </button>
@@ -244,7 +245,7 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16 mb-20">
                         <div className="col-span-1 md:col-span-1 flex flex-col items-start gap-8">
                             <div className="h-24 flex items-center">
-                                <img src={logo} alt="Art Tales Logo" className="h-full w-auto object-contain" />
+                                <img src={logoFooter} alt="Art Tales Logo" className="h-full w-auto object-contain" />
                             </div>
                             <p className="text-sm text-white/60 leading-relaxed font-medium max-w-xs">
                                 Capturing fluid stories in resin and light. Handcrafted boutique art studio based in Mumbai.
