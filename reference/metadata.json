@@ -1,0 +1,9 @@
+
+{
+  "name": "Art Tales by Aashwi Maheshwari",
+  "description": "A high-end artisan boutique showcasing handcrafted resin art, bespoke jewelry, and aromatic candles with a signature glassmorphic aesthetic.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
