@@ -179,26 +179,26 @@ const ProductDetail: React.FC<Props> = ({ addToCart }) => {
             </div>
 
             {/* Behind the Art Video Section */}
-            <section className="relative h-[600px] rounded-[3rem] overflow-hidden bg-primary group">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary to-transparent opacity-90 z-10"></div>
+            <section className="relative h-[500px] md:h-[600px] rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-primary group">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent opacity-90 z-10"></div>
                 <img
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPA4C8S9aYLbcCcrz9ot0V4rU8EQUtchnJCa8jXJWuUbHY1NbQEs2YGec4pZbIzvwVuJ3_KgamMS7DYooyKjO-d46w3GHzkvDai3tE-hP3iyS1ZHRv3bmXD0mJwKMzHoAPnYfuO8E66995nl3R4G4Uglvx-IKn66qveP9FamcEgdYx63XJl4ovkgQn7CTOwNPEZa5FuzsETX_Ryv1N9jKjEKYAUNbFFTTvDal22wRMBi3wAl5YbQ9yPm_ccx1dm_U-keIFqPZlRSSz"
                     className="absolute inset-0 w-full h-full object-cover grayscale-[0.5] contrast-125"
                 />
-                <div className="relative z-20 h-full w-full max-w-[1280px] mx-auto px-12 flex flex-col justify-center gap-8">
+                <div className="relative z-20 h-full w-full max-w-[1280px] mx-auto px-6 md:px-12 flex flex-col justify-center gap-6 md:gap-8">
                     <div className="w-12 h-0.5 bg-white/30"></div>
                     <div>
-                        <span className="text-white/60 text-[10px] font-black uppercase tracking-[0.3em] block mb-4">The Craft</span>
-                        <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-8">Behind the Art</h2>
-                        <p className="text-white/80 text-lg font-medium leading-relaxed max-w-lg mb-12">
+                        <span className="text-white/60 text-[10px] font-black uppercase tracking-[0.3em] block mb-3 md:mb-4">The Craft</span>
+                        <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-6 md:mb-8">Behind the Art</h2>
+                        <p className="text-white/80 text-sm md:text-lg font-medium leading-relaxed max-w-xs md:max-w-lg mb-8 md:mb-12">
                             Watch how Aashwi brings the "Ocean Breeze" collection to life. Every wave is poured by hand, manipulated with heat and air to create organic cells and lacing that mimics the real ocean foam. No two waves are ever the same.
                         </p>
-                        <button className="text-white text-[11px] font-black uppercase tracking-widest border-b-2 border-white/20 pb-1 hover:border-white transition-all">Read the Artist's Story</button>
+                        <button className="text-white text-[10px] md:text-[11px] font-black uppercase tracking-widest border-b-2 border-white/20 pb-1 hover:border-white transition-all">Read the Artist's Story</button>
                     </div>
                 </div>
-                <div className="absolute top-1/2 right-12 md:right-32 -translate-y-1/2 z-30">
-                    <button className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:scale-110 transition-transform shadow-2xl group">
-                        <span className="material-symbols-outlined text-white text-5xl md:text-6xl group-hover:scale-110 transition-transform">play_arrow</span>
+                <div className="absolute bottom-6 right-6 md:top-1/2 md:right-32 md:-translate-y-1/2 z-30">
+                    <button className="w-16 h-16 md:w-32 md:h-32 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center hover:scale-110 transition-transform shadow-2xl group">
+                        <span className="material-symbols-outlined text-white text-3xl md:text-6xl group-hover:scale-110 transition-transform">play_arrow</span>
                     </button>
                 </div>
             </section>

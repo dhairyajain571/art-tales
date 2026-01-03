@@ -46,8 +46,8 @@ const Portfolio: React.FC = () => {
                         key={cat}
                         onClick={() => setFilter(cat)}
                         className={`h-11 px-8 rounded-full text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap shadow-sm border ${filter === cat
-                                ? 'bg-primary text-white border-primary shadow-xl scale-105'
-                                : 'bg-white/40 border-white/60 text-primary hover:bg-white/60 hover:border-primary/40'
+                            ? 'bg-primary text-white border-primary shadow-xl scale-105'
+                            : 'bg-white/40 border-white/60 text-primary hover:bg-white/60 hover:border-primary/40'
                             }`}
                     >
                         {cat}
@@ -60,11 +60,11 @@ const Portfolio: React.FC = () => {
                 {filteredPortfolio.map((item, idx) => (
                     <div
                         key={item.id}
-                        className={`break-inside-avoid group relative p-4 glass-panel hover:shadow-resin-hover transition-all duration-700 hover:scale-[1.03] hover:z-10 isolate cursor-pointer ring-1 ring-white/60 ${getOrganicShape(idx)}`}
+                        className={`break-inside-avoid group relative glass-panel hover:shadow-resin-hover transition-all duration-700 hover:scale-[1.03] hover:z-10 isolate cursor-pointer border-[12px] md:border-[16px] border-white/50 ${getOrganicShape(idx)}`}
                     >
-                        <div className={`relative w-full h-full overflow-hidden isolate shadow-inner ${getOrganicShape(idx)}`}>
+                        <div className="relative w-full h-full overflow-hidden isolate shadow-inner rounded-none">
                             <img
-                                className="w-full h-auto object-cover transform transition-transform duration-[2s] group-hover:scale-110"
+                                className="w-full h-full object-cover transform transition-transform duration-[2s] group-hover:scale-110"
                                 src={item.image}
                                 alt={item.title}
                             />
@@ -74,19 +74,19 @@ const Portfolio: React.FC = () => {
                             <div className="absolute inset-0 bg-resin-depth pointer-events-none z-10"></div>
 
                             {/* Overlay content */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-10 backdrop-blur-[2px] z-20">
+                            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 md:p-14 backdrop-blur-[2px] z-20">
                                 <span className="text-secondary text-[10px] font-black uppercase tracking-[0.2em] mb-2 drop-shadow-md">{item.category}</span>
                                 <h3 className="text-white text-2xl font-black leading-tight tracking-tight drop-shadow-md">{item.title}</h3>
-                                <p className="text-white/70 text-sm font-medium mt-3 line-clamp-3 leading-relaxed drop-shadow-sm">{item.description}</p>
-                                <div className="mt-6 w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-primary transition-all shadow-lg backdrop-blur-md">
-                                    <span className="material-symbols-outlined text-base">arrow_forward</span>
+                                <p className="text-white/80 text-sm font-bold mt-3 line-clamp-3 leading-relaxed drop-shadow-md pr-4">{item.description}</p>
+                                <div className="mt-6 w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center text-white group-hover:bg-white group-hover:text-primary transition-all shadow-lg backdrop-blur-md">
+                                    <span className="material-symbols-outlined text-lg">arrow_forward</span>
                                 </div>
                             </div>
 
                             {/* Top right icon */}
-                            <div className="absolute top-6 right-6 z-30 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                                <div className="bg-white/20 backdrop-blur-md rounded-full p-2.5 text-white shadow-xl border border-white/30">
-                                    <span className="material-symbols-outlined text-[20px]">fullscreen</span>
+                            <div className="absolute top-8 right-8 z-30 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                                <div className="bg-white/20 backdrop-blur-md rounded-full p-3 text-white shadow-xl border border-white/40">
+                                    <span className="material-symbols-outlined text-[22px]">fullscreen</span>
                                 </div>
                             </div>
                         </div>

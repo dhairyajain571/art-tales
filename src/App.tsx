@@ -52,14 +52,12 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
             <div className="fixed bottom-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-primary/10 blur-[100px] -z-10 mix-blend-multiply"></div>
 
             <header className="sticky top-6 z-50 w-[92%] max-w-[1280px] mx-auto transition-all duration-300">
-                <div className="glass-panel !rounded-full p-2 pr-3 flex items-center justify-between !bg-white/40">
-                    <Link className="flex items-center gap-3 group pl-1" to="/">
-                        <Link className="flex items-center gap-3 group pl-1" to="/">
-                            <img src={logoHeader} alt="Art Tales" className="h-[4.5rem] w-auto object-contain transition-transform duration-300 group-hover:scale-110" />
-                            <div className="flex flex-col">
-                                <span className="text-[10px] uppercase tracking-[0.2em] text-primary/70 font-semibold mt-0.5">Aashwi Maheshwari</span>
-                            </div>
-                        </Link>
+                <div className="glass-panel !rounded-[2rem] md:!rounded-full p-4 md:p-2 md:pr-3 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 !bg-white/40 transition-all duration-300">
+                    <Link className="flex flex-col md:flex-row items-center md:gap-3 group pl-1 relative z-10" to="/">
+                        <img src={logoHeader} alt="Art Tales" className="h-[4rem] md:h-[4.5rem] w-auto object-contain transition-transform duration-300 group-hover:scale-110" />
+                        <div className="flex flex-col items-center md:items-start -mt-1 md:mt-0">
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-primary/70 font-semibold mt-0.5 whitespace-nowrap">by Aashwi Maheshwari</span>
+                        </div>
                     </Link>
 
                     <nav className="hidden md:flex items-center gap-1 bg-white/20 px-1.5 py-1.5 rounded-full shadow-inner border border-white/30 backdrop-blur-md">
@@ -69,7 +67,7 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
                         <Link className={`text-sm font-semibold px-6 py-2 rounded-full transition-all duration-300 ${isActive('/contact')}`} to="/contact">Contact</Link>
                     </nav>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-3 md:gap-2 w-full md:w-auto justify-center md:justify-end">
                         <button className="flex items-center justify-center w-10 h-10 rounded-full bg-white/50 hover:bg-white text-primary shadow-gem transition-all border border-white/60 hover:-translate-y-0.5">
                             <span className="material-symbols-outlined text-[18px]">search</span>
                         </button>
