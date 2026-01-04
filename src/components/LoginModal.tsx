@@ -9,8 +9,8 @@ interface LoginModalProps {
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
-    const { loginWithEmail, loginWithPhone, loginWithSocial, loginAsGuest, loading } = useAuth();
-    const [activeTab, setActiveTab] = useState<'email' | 'phone' | 'social'>('email');
+    const { loginWithEmail, loginWithPhone, loginWithSocial, loginAsGuest, loginAsAdmin, loading } = useAuth();
+    const [activeTab, setActiveTab] = useState<'email' | 'phone' | 'social' | 'admin'>('email');
 
     // Form States
     const [email, setEmail] = useState('');
@@ -18,6 +18,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [phone, setPhone] = useState('');
     const [otp, setOtp] = useState('');
     const [showOtpInput, setShowOtpInput] = useState(false);
+    const [adminCode, setAdminCode] = useState('');
 
     if (!isOpen) return null;
 
@@ -60,6 +61,18 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
         onClose();
     };
 
+    const handleAdminLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const success = await loginAsAdmin(adminCode);
+        if (success) {
+            onClose();
+            // Optional: Redirect to admin dashboard if currently on a protected route or explicit action
+            window.location.href = '/admin';
+        } else {
+            alert('Invalid Admin Code');
+        }
+    };
+
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-primary/30 backdrop-blur-sm" onClick={onClose}></div>
@@ -87,31 +100,37 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
                     <div className="flex-1 flex flex-col justify-center max-w-sm mx-auto w-full">
                         <div className="mb-8">
-                            <h3 className="text-2xl font-bold text-primary mb-1">Get Started</h3>
-                            <p className="text-slate-500 text-sm">Join the community of art lovers.</p>
+                            <h3 className="text-2xl font-bold text-primary mb-1">
+                                {activeTab === 'admin' ? 'Admin Access' : 'Get Started'}
+                            </h3>
+                            <p className="text-slate-500 text-sm">
+                                {activeTab === 'admin' ? 'Enter your secure access code.' : 'Join the community of art lovers.'}
+                            </p>
                         </div>
 
                         {/* Tabs */}
-                        <div className="flex p-1 bg-slate-100 rounded-xl mb-8">
-                            <button
-                                onClick={() => setActiveTab('email')}
-                                className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'email' ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-primary'}`}
-                            >
-                                Email
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('phone')}
-                                className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'phone' ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-primary'}`}
-                            >
-                                Phone
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('social')}
-                                className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'social' ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-primary'}`}
-                            >
-                                Social
-                            </button>
-                        </div>
+                        {activeTab !== 'admin' && (
+                            <div className="flex p-1 bg-slate-100 rounded-xl mb-8">
+                                <button
+                                    onClick={() => setActiveTab('email')}
+                                    className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'email' ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-primary'}`}
+                                >
+                                    Email
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('phone')}
+                                    className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'phone' ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-primary'}`}
+                                >
+                                    Phone
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('social')}
+                                    className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${activeTab === 'social' ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-primary'}`}
+                                >
+                                    Social
+                                </button>
+                            </div>
+                        )}
 
                         {/* Content */}
                         {activeTab === 'email' && (
@@ -157,7 +176,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                             placeholder="+1 (555) 000-0000"
                                             required
                                         />
-                                        <p className="text-[10px] text-slate-400 mt-2">We'll send you a one-time password.</p>
+                                        <p className="text-[10px] text-slate-400 mt-2">We'ell send you a one-time password.</p>
                                     </div>
                                 ) : (
                                     <div>
@@ -197,11 +216,39 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             </div>
                         )}
 
-                        <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col items-center gap-4">
-                            <button onClick={handleGuestAccess} className="text-sm font-bold text-slate-400 hover:text-primary transition-colors">
-                                Continue as Guest
-                            </button>
-                        </div>
+                        {activeTab === 'admin' && (
+                            <form onSubmit={handleAdminLogin} className="space-y-4 animate-fadeIn">
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Secure Access Code</label>
+                                    <input
+                                        type="password"
+                                        value={adminCode}
+                                        onChange={(e) => setAdminCode(e.target.value)}
+                                        className="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 text-base focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all tracking-widest font-mono"
+                                        placeholder="••••••••"
+                                        required
+                                        autoFocus
+                                    />
+                                </div>
+                                <button disabled={loading} className="w-full h-14 bg-secondary-dark hover:bg-secondary text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                                    {loading ? 'Verifying...' : 'Access Dashboard'}
+                                </button>
+                                <button type="button" onClick={() => setActiveTab('email')} className="w-full py-2 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-slate-600">
+                                    Back to Login
+                                </button>
+                            </form>
+                        )}
+
+                        {activeTab !== 'admin' && (
+                            <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col items-center gap-4">
+                                <button onClick={handleGuestAccess} className="text-sm font-bold text-slate-400 hover:text-primary transition-colors">
+                                    Continue as Guest
+                                </button>
+                                <button onClick={() => setActiveTab('admin')} className="text-[10px] font-bold text-slate-300 hover:text-secondary-dark transition-colors uppercase tracking-widest">
+                                    Admin Access
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

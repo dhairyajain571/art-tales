@@ -1,13 +1,23 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PORTFOLIO } from '../constants';
+import { useData } from '../contexts/DataContext';
 
 const Portfolio: React.FC = () => {
+    const { siteContent } = useData();
     const [filter, setFilter] = useState('All');
-    const categories = ['All', 'Furniture', 'Trays', 'Botanical', 'Clocks', 'Candles'];
 
-    const filteredPortfolio = filter === 'All' ? PORTFOLIO : PORTFOLIO.filter(item => item.category === filter);
+    // Use dynamic categories or fallback to defaults if empty
+    const defaultCategories = ['All', 'Furniture', 'Trays', 'Botanical', 'Clocks', 'Candles'];
+    const dynamicCategories = siteContent.portfolio?.categories && siteContent.portfolio.categories.length > 0
+        ? ['All', ...siteContent.portfolio.categories]
+        : defaultCategories;
+
+    // Use dynamic portfolio items
+    const portfolioItems = siteContent.portfolio?.items || [];
+
+    const filteredPortfolio = filter === 'All'
+        ? portfolioItems
+        : portfolioItems.filter(item => item.category === filter);
 
     // Helper for varied organic border radii based on index to create that custom "blob" look
     const getOrganicShape = (index: number) => {
@@ -41,7 +51,7 @@ const Portfolio: React.FC = () => {
 
             {/* Filters */}
             <div className="sticky top-28 z-40 py-2 flex justify-center gap-2 md:gap-4 overflow-x-auto no-scrollbar mask-gradient-x">
-                {categories.map(cat => (
+                {dynamicCategories.map(cat => (
                     <button
                         key={cat}
                         onClick={() => setFilter(cat)}
@@ -57,41 +67,48 @@ const Portfolio: React.FC = () => {
 
             {/* Masonry-like Grid */}
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-10 space-y-12 p-4">
-                {filteredPortfolio.map((item, idx) => (
-                    <div
-                        key={item.id}
-                        className={`break-inside-avoid group relative glass-panel hover:shadow-resin-hover transition-all duration-700 hover:scale-[1.03] hover:z-10 isolate cursor-pointer border-[12px] md:border-[16px] border-white/50 ${getOrganicShape(idx)}`}
-                    >
-                        <div className="relative w-full h-full overflow-hidden isolate shadow-inner rounded-none">
-                            <img
-                                className="w-full h-full object-cover transform transition-transform duration-[2s] group-hover:scale-110"
-                                src={item.image}
-                                alt={item.title}
-                            />
-                            {/* Shine effect */}
-                            <div className="absolute inset-0 bg-resin-shine opacity-60 pointer-events-none z-10 mix-blend-soft-light transition-opacity group-hover:opacity-80"></div>
-                            {/* Depth gradient */}
-                            <div className="absolute inset-0 bg-resin-depth pointer-events-none z-10"></div>
+                {filteredPortfolio.length > 0 ? (
+                    filteredPortfolio.map((item, idx) => (
+                        <div
+                            key={item.id}
+                            className={`break-inside-avoid group relative glass-panel hover:shadow-resin-hover transition-all duration-700 hover:scale-[1.03] hover:z-10 isolate cursor-pointer border-[12px] md:border-[16px] border-white/50 ${getOrganicShape(idx)}`}
+                        >
+                            <div className="relative w-full h-full overflow-hidden isolate shadow-inner rounded-none">
+                                <img
+                                    className="w-full h-full object-cover transform transition-transform duration-[2s] group-hover:scale-110"
+                                    src={item.image}
+                                    alt={item.title}
+                                />
+                                {/* Shine effect */}
+                                <div className="absolute inset-0 bg-resin-shine opacity-60 pointer-events-none z-10 mix-blend-soft-light transition-opacity group-hover:opacity-80"></div>
+                                {/* Depth gradient */}
+                                <div className="absolute inset-0 bg-resin-depth pointer-events-none z-10"></div>
 
-                            {/* Overlay content */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 md:p-14 backdrop-blur-[2px] z-20">
-                                <span className="text-secondary text-[10px] font-black uppercase tracking-[0.2em] mb-2 drop-shadow-md">{item.category}</span>
-                                <h3 className="text-white text-2xl font-black leading-tight tracking-tight drop-shadow-md">{item.title}</h3>
-                                <p className="text-white/80 text-sm font-bold mt-3 line-clamp-3 leading-relaxed drop-shadow-md pr-4">{item.description}</p>
-                                <div className="mt-6 w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center text-white group-hover:bg-white group-hover:text-primary transition-all shadow-lg backdrop-blur-md">
-                                    <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                                {/* Overlay content */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 md:p-14 backdrop-blur-[2px] z-20">
+                                    <span className="text-secondary text-[10px] font-black uppercase tracking-[0.2em] mb-2 drop-shadow-md">{item.category}</span>
+                                    <h3 className="text-white text-2xl font-black leading-tight tracking-tight drop-shadow-md">{item.title}</h3>
+                                    <p className="text-white/80 text-sm font-bold mt-3 line-clamp-3 leading-relaxed drop-shadow-md pr-4">{item.description}</p>
+                                    <div className="mt-6 w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center text-white group-hover:bg-white group-hover:text-primary transition-all shadow-lg backdrop-blur-md">
+                                        <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Top right icon */}
-                            <div className="absolute top-8 right-8 z-30 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                                <div className="bg-white/20 backdrop-blur-md rounded-full p-3 text-white shadow-xl border border-white/40">
-                                    <span className="material-symbols-outlined text-[22px]">fullscreen</span>
+                                {/* Top right icon */}
+                                <div className="absolute top-8 right-8 z-30 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                                    <div className="bg-white/20 backdrop-blur-md rounded-full p-3 text-white shadow-xl border border-white/40">
+                                        <span className="material-symbols-outlined text-[22px]">fullscreen</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    ))
+                ) : (
+                    <div className="flex flex-col items-center justify-center p-12 col-span-full text-center break-inside-avoid">
+                        <span className="material-symbols-outlined text-4xl text-slate-300 mb-2">image_not_supported</span>
+                        <p className="text-slate-500 font-medium">No portfolio items found in this category.</p>
                     </div>
-                ))}
+                )}
             </div>
 
             {/* Commission CTA with high-end typography */}

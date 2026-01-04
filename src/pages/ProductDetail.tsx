@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { PRODUCTS } from '../constants';
+import { useData } from '../contexts/DataContext';
 import { Product } from '../types';
 
 interface Props {
@@ -9,8 +9,9 @@ interface Props {
 }
 
 const ProductDetail: React.FC<Props> = ({ addToCart }) => {
+    const { products, formatPrice } = useData();
     const { id } = useParams<{ id: string }>();
-    const product = PRODUCTS.find(p => p.id === id);
+    const product = products.find(p => p.id === id);
     const [quantity, setQuantity] = useState(1);
     const [selectedFinish, setSelectedFinish] = useState('Gold Flakes');
     const [openAccordion, setOpenAccordion] = useState<string | null>('desc');
@@ -25,7 +26,7 @@ const ProductDetail: React.FC<Props> = ({ addToCart }) => {
     }
 
     // Use all products except current for the "Complete the Look" section
-    const completeTheLookItems = PRODUCTS.filter(p => p.id !== product.id).slice(0, 4);
+    const completeTheLookItems = products.filter(p => p.id !== product.id).slice(0, 4);
 
     return (
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-10 flex flex-col gap-16 md:gap-24">
@@ -76,7 +77,7 @@ const ProductDetail: React.FC<Props> = ({ addToCart }) => {
                         <h1 className="text-3xl md:text-4xl font-black text-primary leading-tight mb-2 tracking-tight">{product.name}</h1>
 
                         <div className="flex items-center gap-4 mb-8">
-                            <span className="text-3xl font-black text-primary tracking-tight">${product.price.toFixed(2)}</span>
+                            <span className="text-3xl font-black text-primary tracking-tight">{formatPrice(product.price)}</span>
                             <div className="flex items-center gap-0.5 text-yellow-400">
                                 {[1, 2, 3, 4, 5].map(star => (
                                     <span key={star} className="material-symbols-outlined text-[18px] fill-current" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
@@ -225,8 +226,8 @@ const ProductDetail: React.FC<Props> = ({ addToCart }) => {
                             <div className="px-2">
                                 <h3 className="text-sm font-bold text-primary group-hover:text-primary-light transition-colors">{item.name}</h3>
                                 <div className="flex items-center gap-2 mt-1">
-                                    <span className="text-sm font-black text-primary/60">${item.price.toFixed(2)}</span>
-                                    {item.oldPrice && <span className="text-[10px] font-bold text-primary/20 line-through">${item.oldPrice.toFixed(2)}</span>}
+                                    <span className="text-sm font-black text-primary/60">{formatPrice(item.price)}</span>
+                                    {item.oldPrice && <span className="text-[10px] font-bold text-primary/20 line-through">{formatPrice(item.oldPrice)}</span>}
                                 </div>
                             </div>
                         </Link>

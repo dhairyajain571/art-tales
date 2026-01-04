@@ -4,40 +4,73 @@
 
 @layer utilities {
     .text-shadow-sm {
-        text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
     }
+
     .text-depth {
-        text-shadow: 0 2px 4px rgba(74,20,140,0.1);
+        text-shadow: 0 2px 4px rgba(74, 20, 140, 0.1);
     }
+
     .glass-panel {
         @apply bg-white/20 backdrop-blur-xl border border-white/40 shadow-resin-card relative overflow-hidden;
     }
+
     .btn-resin {
         @apply relative overflow-hidden transition-all duration-300 active:scale-95 text-white bg-btn-gem shadow-resin-btn hover:shadow-lg hover:-translate-y-[1px] hover:scale-105;
     }
+
     .btn-resin-secondary {
-         @apply relative overflow-hidden transition-all duration-300 active:scale-95 text-primary bg-white/40 backdrop-blur-md shadow-embedded border border-white/60 hover:bg-white/60 hover:shadow-lg hover:-translate-y-[1px];
+        @apply relative overflow-hidden transition-all duration-300 active:scale-95 text-primary bg-white/40 backdrop-blur-md shadow-embedded border border-white/60 hover:bg-white/60 hover:shadow-lg hover:-translate-y-[1px];
     }
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .resin-embedded {
+        @apply bg-white/40 border border-white/60 shadow-embedded backdrop-blur-md;
+    }
+
+    .resin-glass {
+        @apply bg-white/30 border border-white/40 shadow-lg backdrop-blur-xl hover:shadow-xl transition-all duration-500;
+    }
+
+    .resin-image-frame {
+        @apply relative p-3 bg-white/80 rounded-[3rem] shadow-resin-card border border-white/60 backdrop-blur-sm;
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
 }
 
 /* Custom Scrollbar from Shop Design */
 ::-webkit-scrollbar {
     width: 6px;
 }
+
 ::-webkit-scrollbar-track {
     background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
     background-color: rgba(106, 27, 154, 0.2);
     border-radius: 20px;
 }
 
 @keyframes float-gentle {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
 }
+
 .float-hover:hover {
     animation: float-gentle 3s ease-in-out infinite;
 }

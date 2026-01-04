@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PRODUCTS } from '../constants';
+import { useData } from '../contexts/DataContext';
 import { Product } from '../types';
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 }
 
 const Shop: React.FC<Props> = ({ addToCart }) => {
+    const { products, siteContent, formatPrice } = useData();
     // Basic filtering logic for demonstration
     const [categoryFilter, setCategoryFilter] = useState<string[]>([]);
     const [priceSort, setPriceSort] = useState<string>('newest');
@@ -21,7 +22,7 @@ const Shop: React.FC<Props> = ({ addToCart }) => {
         );
     };
 
-    const filteredProducts = PRODUCTS.filter(p =>
+    const filteredProducts = products.filter(p =>
         categoryFilter.length === 0 || categoryFilter.includes(p.category)
     ).sort((a, b) => {
         if (priceSort === 'price-asc') return a.price - b.price;
@@ -71,7 +72,7 @@ const Shop: React.FC<Props> = ({ addToCart }) => {
                             </summary>
                             <div className="px-6 pb-6 pt-4 flex flex-col gap-3 relative">
                                 <div className="absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-black/5 to-transparent pointer-events-none"></div>
-                                {['Resin Art', 'Homeware', 'Jewelry', 'Candles'].map(cat => (
+                                {(siteContent.shop?.categories && siteContent.shop.categories.length > 0 ? siteContent.shop.categories : ['Resin Art', 'Homeware', 'Jewelry', 'Candles']).map(cat => (
                                     <label key={cat} className="flex items-center gap-3 cursor-pointer group/item hover:translate-x-1 transition-transform p-1">
                                         <div className="relative flex items-center">
                                             <input
@@ -99,12 +100,12 @@ const Shop: React.FC<Props> = ({ addToCart }) => {
                                 </div>
                                 <div className="flex gap-3">
                                     <div className="relative flex-1 group">
-                                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-xs font-bold">$</span>
-                                        <input type="number" placeholder="Min" className="w-full rounded-xl border-0 bg-white/50 text-sm pl-6 pr-3 py-2.5 focus:ring-2 focus:ring-primary shadow-embedded transition-all" />
+                                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-xs font-bold">{siteContent.global?.currency}</span>
+                                        <input type="number" placeholder="Min" className="w-full rounded-xl border-0 bg-white/50 text-sm pl-9 pr-3 py-2.5 focus:ring-2 focus:ring-primary shadow-embedded transition-all" />
                                     </div>
                                     <div className="relative flex-1 group">
-                                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-xs font-bold">$</span>
-                                        <input type="number" placeholder="Max" className="w-full rounded-xl border-0 bg-white/50 text-sm pl-6 pr-3 py-2.5 focus:ring-2 focus:ring-primary shadow-embedded transition-all" />
+                                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-xs font-bold">{siteContent.global?.currency}</span>
+                                        <input type="number" placeholder="Max" className="w-full rounded-xl border-0 bg-white/50 text-sm pl-9 pr-3 py-2.5 focus:ring-2 focus:ring-primary shadow-embedded transition-all" />
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +116,7 @@ const Shop: React.FC<Props> = ({ addToCart }) => {
                 {/* Product Grid */}
                 <div className="flex-1 flex flex-col gap-8">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/40 dark:bg-surface-dark p-2 pl-6 pr-2 rounded-full border border-white/60 backdrop-blur-xl shadow-resin-card">
-                        <p className="text-text-main dark:text-white text-sm font-medium">Showing <span className="font-bold text-primary">{filteredProducts.length}</span> of <span className="font-bold">{PRODUCTS.length}</span> handcrafted items</p>
+                        <p className="text-text-main dark:text-white text-sm font-medium">Showing <span className="font-bold text-primary">{filteredProducts.length}</span> of <span className="font-bold">{products.length}</span> handcrafted items</p>
                         <div className="flex items-center gap-3 bg-white/40 rounded-full pl-4 pr-1 py-1 shadow-embedded">
                             <label htmlFor="sort" className="text-xs text-text-muted dark:text-gray-300 font-bold uppercase tracking-wide">Sort</label>
                             <div className="relative">
@@ -175,7 +176,7 @@ const Shop: React.FC<Props> = ({ addToCart }) => {
                                             {product.name}
                                         </Link>
                                         <span className="text-primary font-black text-xl drop-shadow-sm bg-white/30 px-3 py-1 rounded-lg border border-white/40 shadow-sm">
-                                            ${product.price}
+                                            {formatPrice(product.price)}
                                         </span>
                                     </div>
                                     <p className="text-text-muted dark:text-gray-300 text-sm font-medium line-clamp-1 opacity-80">{product.category}</p>

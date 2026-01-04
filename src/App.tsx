@@ -12,17 +12,25 @@ import { Product } from './types';
 import LiveConsultation from './components/LiveConsultation';
 import logoHeader from './assets/logo_header.png';
 
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import LoginModal from './components/LoginModal';
+import { DataProvider } from './contexts/DataContext';
+import AdminLayout from './layouts/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminProducts from './pages/admin/AdminProducts';
+import AdminDiscounts from './pages/admin/AdminDiscounts';
+import AdminCMS from './pages/admin/AdminCMS';
 
 interface CartItem extends Product {
     quantity: number;
 }
 
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import LoginModal from './components/LoginModal';
+import { useData } from './contexts/DataContext';
 
 const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: React.Dispatch<React.SetStateAction<CartItem[]>> }> = ({ children, cart, setCart }) => {
     const { pathname } = useLocation();
     const { user, logout, isAuthenticated } = useAuth();
+    const { siteContent, formatPrice } = useData();
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isConsultOpen, setIsConsultOpen] = useState(false);
@@ -194,30 +202,40 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
                                                     <span className="material-symbols-outlined text-sm">delete</span>
                                                 </button>
                                             </div>
-                                            <p className="text-sm font-black text-primary mt-auto">${(item.price * item.quantity).toFixed(2)}</p>
+                                            <p className="text-sm font-black text-primary mt-auto">{formatPrice(item.price * item.quantity)}</p>
                                         </div>
                                     </div>
                                 ))
                             )}
                         </div>
-                        {cart.length > 0 && (
-                            <div className="pt-6 border-t border-primary/10">
-                                <div className="flex justify-between items-center mb-6">
-                                    <span className="text-slate-500 font-bold">Total</span>
-                                    <span className="text-2xl font-black text-primary">${cartTotal.toFixed(2)}</span>
-                                </div>
-                                <button className="w-full h-14 btn-resin rounded-full font-black uppercase tracking-widest rounded-2xl">Checkout</button>
+                        <div className="pt-6 border-t border-primary/10">
+                            <div className="flex justify-between items-center mb-6">
+                                <span className="text-slate-500 font-bold">Total</span>
+                                <span className="text-2xl font-black text-primary">{formatPrice(cartTotal)}</span>
                             </div>
-                        )}
+                            <button
+                                onClick={() => {
+                                    const phone = siteContent.settings?.whatsappNumber || '919876543210';
+                                    const message = encodeURIComponent(`Hi, I'd like to place an order:\n\n${cart.map(i => `${i.name} (x${i.quantity})`).join('\n')}\n\nTotal: ${formatPrice(cartTotal)}`);
+                                    window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+                                }}
+                                className="w-full h-14 btn-resin rounded-full font-black uppercase tracking-widest rounded-2xl flex items-center justify-center gap-2"
+                            >
+                                <span>Checkout on WhatsApp</span>
+                                <span className="material-symbols-outlined text-lg">chat</span>
+                            </button>
+                        </div>
                     </div>
                 </>
             )}
 
             {/* Floating AI Bubble */}
-            <button onClick={() => setIsConsultOpen(true)} className="fixed bottom-8 right-8 z-[50] w-16 h-16 rounded-full btn-resin flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
-                <span className="material-symbols-outlined text-3xl">auto_awesome</span>
-            </button>
-            {isConsultOpen && <LiveConsultation onClose={() => setIsConsultOpen(false)} />}
+            {(siteContent.settings?.enableAI ?? true) && (
+                <button onClick={() => setIsConsultOpen(true)} className="fixed bottom-8 right-8 z-[50] w-16 h-16 rounded-full btn-resin flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
+                    <span className="material-symbols-outlined text-3xl">auto_awesome</span>
+                </button>
+            )}
+            {isConsultOpen && (siteContent.settings?.enableAI ?? true) && <LiveConsultation onClose={() => setIsConsultOpen(false)} />}
 
             <footer className="footer-glass relative overflow-hidden mt-12 border-t border-white/60">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-white/40 pointer-events-none"></div>
@@ -229,7 +247,7 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
                                 <img src={logoHeader} alt="Art Tales" className="h-28 w-auto object-contain" />
                             </div>
                             <p className="text-sm text-slate-600 leading-relaxed mb-6 font-medium pr-4">
-                                Handcrafted resin art and candles, designed to illuminate your world with creativity and elegance.
+                                {siteContent.footer?.description || 'Handcrafted resin art and candles, designed to illuminate your world with creativity and elegance.'}
                             </p>
                             <div className="flex gap-3">
                                 <a className="w-10 h-10 flex items-center justify-center rounded-full btn-resin-secondary text-primary transition-all" href="#"><span className="material-symbols-outlined text-lg">photo_camera</span></a>
@@ -240,9 +258,9 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
                             <h4 className="font-bold mb-6 text-xs uppercase tracking-widest text-primary/80">Shop</h4>
                             <ul className="space-y-3 text-sm text-slate-600 font-medium">
                                 <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/shop"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> All Products</Link></li>
-                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/shop"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> Resin Art</Link></li>
-                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/shop"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> Candles</Link></li>
-                                <li><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/shop"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> Gift Cards</Link></li>
+                                {siteContent.shop?.categories?.slice(0, 3).map(cat => (
+                                    <li key={cat}><Link className="hover:text-primary transition-colors flex items-center gap-1 group" to="/shop"><span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors"></span> {cat}</Link></li>
+                                ))}
                             </ul>
                         </div>
                         <div>
@@ -259,17 +277,17 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
                             <ul className="space-y-4 text-sm text-slate-600 font-medium">
                                 <li className="flex items-start gap-3 p-3 rounded-2xl bg-white/40 border border-white/50 shadow-sm">
                                     <span className="material-symbols-outlined text-lg mt-0.5 text-primary">location_on</span>
-                                    <span>Mumbai, India</span>
+                                    <span>{siteContent.contact?.address}</span>
                                 </li>
                                 <li className="flex items-center gap-3 p-3 rounded-2xl bg-white/40 border border-white/50 shadow-sm">
                                     <span className="material-symbols-outlined text-lg text-primary">mail</span>
-                                    <span>hello@arttales.com</span>
+                                    <span>{siteContent.contact?.email}</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div className="pt-8 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 font-bold tracking-wide">
-                        <p>© 2023 Art Tales by Aashwi Maheshwari. All rights reserved.</p>
+                        <p>{siteContent.footer?.copyright || '© 2023 Art Tales. All rights reserved.'}</p>
                         <div className="flex gap-6">
                             <a className="hover:text-primary transition-colors" href="#">Privacy Policy</a>
                             <a className="hover:text-primary transition-colors" href="#">Terms of Service</a>
@@ -279,6 +297,21 @@ const Layout: React.FC<{ children: React.ReactNode, cart: CartItem[], setCart: R
             </footer>
         </div>
     );
+};
+
+const ProtectedRoute: React.FC<{ children: React.ReactNode, role: string }> = ({ children, role }) => {
+    const { user, loading } = useAuth();
+
+    if (loading) return <div className="min-h-screen flex items-center justify-center text-primary">Loading...</div>;
+
+    if (!user || (role && user.role !== role)) {
+        return <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+            <h2 className="text-2xl font-bold text-primary">Access Denied</h2>
+            <Link to="/" className="btn-resin px-6 py-2 rounded-full">Return Home</Link>
+        </div>;
+    }
+
+    return <>{children}</>;
 };
 
 const App: React.FC = () => {
@@ -294,19 +327,32 @@ const App: React.FC = () => {
     };
     return (
         <AuthProvider>
-            <Router>
-                <Layout cart={cart} setCart={setCart}>
+            <DataProvider>
+                <Router>
                     <Routes>
-                        <Route path="/" element={<Home addToCart={addToCart} />} />
-                        <Route path="/shop" element={<Shop addToCart={addToCart} />} />
-                        <Route path="/product/:id" element={<ProductDetail addToCart={addToCart} />} />
-                        <Route path="/portfolio" element={<Portfolio />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/contact" element={<Contact />} />
-                        <Route path="/about" element={<About />} />
+                        {/* Public Routes */}
+                        <Route path="/" element={<Layout cart={cart} setCart={setCart}><Home addToCart={addToCart} /></Layout>} />
+                        <Route path="/shop" element={<Layout cart={cart} setCart={setCart}><Shop addToCart={addToCart} /></Layout>} />
+                        <Route path="/product/:id" element={<Layout cart={cart} setCart={setCart}><ProductDetail addToCart={addToCart} /></Layout>} />
+                        <Route path="/portfolio" element={<Layout cart={cart} setCart={setCart}><Portfolio /></Layout>} />
+                        <Route path="/profile" element={<Layout cart={cart} setCart={setCart}><Profile /></Layout>} />
+                        <Route path="/contact" element={<Layout cart={cart} setCart={setCart}><Contact /></Layout>} />
+                        <Route path="/about" element={<Layout cart={cart} setCart={setCart}><About /></Layout>} />
+
+                        {/* Admin Routes */}
+                        <Route path="/admin" element={
+                            <ProtectedRoute role="admin">
+                                <AdminLayout />
+                            </ProtectedRoute>
+                        }>
+                            <Route index element={<AdminDashboard />} />
+                            <Route path="products" element={<AdminProducts />} />
+                            <Route path="discounts" element={<AdminDiscounts />} />
+                            <Route path="cms" element={<AdminCMS />} />
+                        </Route>
                     </Routes>
-                </Layout>
-            </Router>
+                </Router>
+            </DataProvider>
         </AuthProvider>
     );
 };

@@ -1,10 +1,13 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logoHero from '../assets/logo_hero.png';
 import logoHeader from '../assets/logo_header.png';
+import { useData } from '../contexts/DataContext';
 
 const About: React.FC = () => {
+    const { siteContent } = useData();
+    const { behindTheScenes, testimonials } = siteContent.about;
+
     return (
         <div className="flex flex-col w-full relative">
             {/* Background decoration elements */}
@@ -44,14 +47,16 @@ const About: React.FC = () => {
                     </div>
 
                     <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center">
-                        <div className="resin-image-frame rotate-2 hover:rotate-0 transition-transform duration-1000 ease-out">
-                            <div
-                                className="w-full aspect-square max-w-[480px] bg-center bg-no-repeat bg-cover rounded-[2.8rem] shadow-inner relative overflow-hidden group"
-                                style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7BVwNujloKr0xa4BBBS9-DOvxNZS0SNvUKpwaTaruVTFPNzFeWi57chgttaobU_q6CQ2D6baimRtlPht98ZUC-6hSM_W39Uw8Rhf4-B1ivXY_DisBH0pTGrGWA1pi308RJtK1r-lUYun16g57PCFcDvDeYXS2wVD3MoEcjERWSNdizE5zJ7DE-tEXoEIojcZjrZoa7erxfyrHAtKoejCWYvYwOTNQZGjXunk1Uz2mYQuXMO7S9PL7xwjArkuEWD5_OfQU6N89NyGX")' }}
-                            >
-                                <div className="absolute inset-0 bg-resin-shine opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                        <div className="relative p-4 bg-white rounded-[3rem] shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-1000 ease-out border-4 border-white/50">
+                            <div className="w-full aspect-square max-w-[480px] rounded-[2.5rem] relative overflow-hidden group">
+                                <img
+                                    src={siteContent.about?.image}
+                                    alt="Aashwi - Art Tales"
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-tr from-black/10 to-transparent pointer-events-none mix-blend-overlay"></div>
+                                <div className="absolute inset-0 bg-resin-shine opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none"></div>
                             </div>
-                            <div className="absolute inset-0 rounded-[3rem] pointer-events-none bg-gradient-to-tr from-transparent via-white/20 to-white/40 mix-blend-overlay"></div>
                         </div>
                     </div>
                 </div>
@@ -91,6 +96,54 @@ const About: React.FC = () => {
                                 </div>
                             ))}
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Behind the Scenes Section */}
+            <section className="px-4 md:px-10 lg:px-40 py-16">
+                <div className="max-w-[1280px] mx-auto text-center">
+                    <span className="text-primary font-black tracking-[0.3em] uppercase text-[10px] bg-white/60 w-fit px-4 py-2 rounded-full backdrop-blur-md shadow-sm border border-white/60 mb-6 mx-auto inline-block">Studio Life</span>
+                    <h2 className="text-primary text-4xl md:text-5xl font-black leading-tight tracking-tight mb-4 drop-shadow-sm">Behind the Scenes</h2>
+                    <p className="text-primary/70 mb-12 text-lg font-medium">A glimpse into the Art Tales studio</p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {behindTheScenes?.map((img, i) => (
+                            <div key={i} className={`group relative overflow-hidden rounded-[2.5rem] aspect-[4/5] shadow-xl border-[6px] border-white/40 ${i === 1 ? 'md:-translate-y-8' : ''}`}>
+                                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url('${img}')` }}></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonials Section */}
+            <section className="px-4 md:px-10 lg:px-40 py-16 bg-white/30 backdrop-blur-sm">
+                <div className="max-w-[1280px] mx-auto text-center">
+                    <h2 className="text-primary text-4xl md:text-5xl font-black leading-tight tracking-tight mb-16 drop-shadow-sm">Loved by Art Lovers</h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {testimonials?.map((testimonial) => (
+                            <div key={testimonial.id} className="bg-white/80 backdrop-blur-md p-8 rounded-[2.5rem] shadow-lg border border-white/60 text-left relative group hover:-translate-y-2 transition-transform duration-300">
+                                <div className="absolute -top-4 -right-4 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg transform rotate-12 group-hover:rotate-0 transition-transform">
+                                    <span className="material-symbols-outlined text-xl">format_quote</span>
+                                </div>
+                                <div className="absolute -top-4 -left-4 w-10 h-10 bg-secondary/30 rounded-full blur-xl"></div>
+
+                                <p className="text-slate-700 font-medium leading-relaxed mb-8 text-sm">"{testimonial.text}"</p>
+
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
+                                        <img src={testimonial.avatar} alt={testimonial.name} className="w-full h-full object-cover" />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-primary text-sm">{testimonial.name}</h4>
+                                        <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">{testimonial.location}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>

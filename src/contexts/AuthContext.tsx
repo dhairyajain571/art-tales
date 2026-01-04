@@ -10,6 +10,7 @@ interface AuthContextType {
     loginAsGuest: () => void;
     logout: () => void;
     loading: boolean;
+    loginAsAdmin: (code: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -89,6 +90,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.setItem('art_tales_user', JSON.stringify(guestUser));
     };
 
+    const loginAsAdmin = async (code: string): Promise<boolean> => {
+        setLoading(true);
+        // Mock secure check
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        // Hardcoded credential for POC
+        if (code === 'admin123') {
+            const adminUser: User = {
+                id: 'admin_001',
+                name: 'Administrator',
+                email: 'admin@arttales.com',
+                role: 'admin',
+                avatar: 'https://ui-avatars.com/api/?name=Admin&background=000&color=fff',
+                isGuest: false
+            };
+            setUser(adminUser);
+            localStorage.setItem('art_tales_user', JSON.stringify(adminUser));
+            setLoading(false);
+            return true;
+        }
+
+        setLoading(false);
+        return false;
+    };
+
     const logout = () => {
         setUser(null);
         localStorage.removeItem('art_tales_user');
@@ -102,6 +128,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             loginWithPhone,
             loginWithSocial,
             loginAsGuest,
+            loginAsAdmin,
             logout,
             loading
         }}>
