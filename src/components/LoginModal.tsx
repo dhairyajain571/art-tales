@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import loginBg from '../assets/login_bg.png';
 import logo from '../assets/logo_header.png';
 
@@ -10,6 +11,7 @@ interface LoginModalProps {
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const { loginWithEmail, loginWithPhone, loginWithSocial, loginAsGuest, loginAsAdmin, loading } = useAuth();
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<'email' | 'phone' | 'social' | 'admin'>('email');
 
     // Form States
@@ -66,8 +68,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
         const success = await loginAsAdmin(adminCode);
         if (success) {
             onClose();
-            // Optional: Redirect to admin dashboard if currently on a protected route or explicit action
-            window.location.href = '/admin';
+            navigate('/admin');
         } else {
             alert('Invalid Admin Code');
         }
